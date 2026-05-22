@@ -1,0 +1,32 @@
+name: Sync Flag Assets
+
+on:
+  workflow_dispatch:
+
+jobs:
+  upload-flags:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Dependencies
+        run: pip install -r data/requirements.txt
+
+      - name: Upload Flags
+        env:
+          FLAGS_BUCKET: ${{ secrets.FLAGS_BUCKET }}
+        run: python data/scripts/upload_flags.py
