@@ -1,1 +1,32 @@
 .venv/
+# Local .terraform directories (provider binaries, modules)
+**/.terraform/*
+
+# Terraform state files (may contain secrets)
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Variable files (often contain sensitive data like passwords/keys)
+*.tfvars
+*.tfvars.json
+
+# Override files (local environment overrides)
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Include override files you do wish to add to version control using negated pattern
+# !example_override.tf
+
+# Plan files (if you output terraform plan to a file)
+# *tfplan*
+
+# CLI configuration files
+.terraformrc
+terraform.rc   
