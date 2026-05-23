@@ -59,45 +59,9 @@ for c in countries:
 
         country_data.append(country_entry)
 
-        # Download flag
-        try:
-            flag_response = requests.get(flag_url, timeout=30)
-            flag_response.raise_for_status()
-
-        except RequestException as e:
-            print(f"Failed to fetch flag for {iso2}: {e}")
-            continue
-
-        # Save locally (optional)
-        local_file = FLAGS_DIR / f"{iso2.lower()}.svg"
-
-        with open(local_file, "wb") as f:
-            f.write(flag_response.content)
-
-        # Upload to S3
-        s3_key = f"flags/{iso2.lower()}.svg"
-
-        try:
-            s3.upload_file(
-                str(local_file),
-                BUCKET_NAME,
-                s3_key,
-                ExtraArgs={
-                    "ContentType": "image/svg+xml"
-                }
-            )
-
-            print(f"Uploaded to s3://{BUCKET_NAME}/{s3_key}")
-
-        except Exception as e:
-            print(f"Failed to upload {iso2} to S3: {e}")
-            continue
-
     except Exception as e:
         print(f"Unexpected error processing country record: {e}")
         continue
-
-print("\nFlag sync complete.")
 
 # Sort alphabetically
 country_data.sort(key=lambda x: x["name"])
