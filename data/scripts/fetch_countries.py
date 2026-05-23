@@ -12,6 +12,11 @@ BUCKET_NAME = os.environ["FLAGS_BUCKET"]
 FLAGS_DIR = Path("flags")
 FLAGS_DIR.mkdir(exist_ok=True)
 
+DATA_DIR = Path("data")
+DATA_DIR.mkdir(exist_ok=True)
+
+COUNTRIES_JSON = DATA_DIR / "countries.json"
+
 # AWS S3 client
 s3 = boto3.client("s3")
 
@@ -22,6 +27,9 @@ response = requests.get(url, timeout=30)
 response.raise_for_status()
 
 countries = response.json()
+
+# Final normalized dataset
+country_data = []
 
 for c in countries:
     try:
@@ -37,6 +45,19 @@ for c in countries:
 
         print(f"\nProcessing {name} ({iso2})")
         print(f"Fetching: {flag_url}")
+        
+        # Build country entry for our dataset
+        country_entry = {
+            "iso2": iso2,
+            "iso3": iso3,
+            "name": name,
+            "capital": capital,
+            "languages": languages,
+            "latitude": lat,
+            "longitude": lng
+        }
+
+        country_data.append(country_entry)
 
         # Download flag
         try:
@@ -77,3 +98,27 @@ for c in countries:
         continue
 
 print("\nFlag sync complete.")
+
+# Sort alphabetically
+country_data.sort(key=lambda x: x["name"])
+
+# Upload countries.json to S3
+try:
+    s3.upload_file(
+        str(COUNTRIES_JSON),
+        BUCKET_NAME,
+        "countries/countries.json",
+        ExtraArgs={
+            "ContentType": "application/json"
+        }
+    )
+
+    print(
+        f"Uploaded countries JSON to "
+        f"s3://{BUCKET_NAME}/countries/countries.json"
+    )
+
+except Exception as e:
+    print(f"Failed to upload countries.json: {e}")
+
+print("\nCountry + flag sync complete.")
