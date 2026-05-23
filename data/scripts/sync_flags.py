@@ -22,6 +22,9 @@ response.raise_for_status()
 
 countries = response.json()
 
+# Final normalized dataset 
+country_data = []
+
 for c in countries:
     try:
         iso2 = c["cca2"]

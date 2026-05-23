@@ -41,10 +41,7 @@ for c in countries:
         languages = list(c.get("languages", {}).values())
         lat, lng = c.get("latlng", [None, None])
 
-        flag_url = f"https://flagcdn.com/{iso2.lower()}.svg"
-
         print(f"\nProcessing {name} ({iso2})")
-        print(f"Fetching: {flag_url}")
         
         # Build country entry for our dataset
         country_entry = {
