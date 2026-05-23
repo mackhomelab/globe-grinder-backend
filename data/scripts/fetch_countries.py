@@ -12,10 +12,10 @@ BUCKET_NAME = os.environ["FLAGS_BUCKET"]
 FLAGS_DIR = Path("flags")
 FLAGS_DIR.mkdir(exist_ok=True)
 
-DATA_DIR = Path("data")
-DATA_DIR.mkdir(exist_ok=True)
+BUILD_DIR = Path("build")
+BUILD_DIR.mkdir(exist_ok=True)
 
-COUNTRIES_JSON = DATA_DIR / "countries.json"
+COUNTRIES_JSON = BUILD_DIR / "countries.json"
 
 # AWS S3 client
 s3 = boto3.client("s3")
