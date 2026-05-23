@@ -31,7 +31,7 @@ jobs:
           FLAGS_BUCKET: ${{ secrets.FLAGS_BUCKET }}
         run: python data/scripts/sync_flags.py
 
-        - name: Upload Country Data
+      - name: Upload Country Data
         env:
           FLAGS_BUCKET: ${{ secrets.FLAGS_BUCKET }}
         run: python data/scripts/sync_countries.py
