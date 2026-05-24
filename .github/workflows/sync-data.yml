@@ -39,4 +39,4 @@ jobs:
       - name: Fetch GeoJSON
         env:
           FLAGS_BUCKET: ${{ secrets.FLAGS_BUCKET }}
-        run: python data/scripts/fetch_geoJSON.py
+        run: python data/scripts/sync_geoJSON.py
