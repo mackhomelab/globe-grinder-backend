@@ -21,7 +21,10 @@ COUNTRIES_JSON = BUILD_DIR / "countries.json"
 s3 = boto3.client("s3")
 
 # REST Countries API
-url = "https://restcountries.com/v3.1/all?fields=cca2,cca3,name,capital,languages,latlng"
+url = (
+    "https://restcountries.com/v3.1/all?"
+    "fields=cca2,cca3,name,capital,languages,latlng,population"
+)
 
 response = requests.get(url, timeout=30)
 response.raise_for_status()
