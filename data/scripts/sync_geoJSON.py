@@ -12,8 +12,8 @@ RAW_DIR.mkdir(parents=True, exist_ok=True)
 
 GEOJSON_URL = (
     "https://raw.githubusercontent.com/"
-    "simonepri/geo-maps/master/"
-    "countries-110m.geo.json"
+    "datasets/geo-countries/master/"
+    "data/countries.geojson"
 )
 
 OUTPUT_FILE = RAW_DIR / "countries.geojson"
