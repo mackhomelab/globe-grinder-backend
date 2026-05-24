@@ -42,6 +42,7 @@ for c in countries:
 
         capital = (c.get("capital") or [None])[0]
         languages = list(c.get("languages", {}).values())
+        population = c.get("population")
         lat, lng = c.get("latlng", [None, None])
 
         print(f"\nProcessing {name} ({iso2})")
@@ -53,6 +54,7 @@ for c in countries:
             "name": name,
             "capital": capital,
             "languages": languages,
+            "population": population,
             "latitude": lat,
             "longitude": lng
         }
